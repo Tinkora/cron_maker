@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build, validate, explain, and preview Unix cron expressions locally in your browser.">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; worker-src 'none'">
+  <title>Cron Maker | Tinkora</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content" data-i18n="skipLink">Skip to workspace</a>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="https://github.com/Tinkora" target="_blank" rel="noopener noreferrer">
+        <span class="brand-mark" aria-hidden="true">T</span>
+        <span>Tinkora</span>
+      </a>
+      <div class="header-actions">
+        <a class="repo-link" href="https://github.com/Tinkora/cron_maker" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <button class="language-button" id="language-button" type="button" aria-label="Switch to Chinese">中文</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="workspace" aria-busy="true">
+    <div class="workspace-heading">
+      <div>
+        <h1 id="app-title" data-i18n="title">Cron Maker</h1>
+        <p class="workspace-subtitle" data-i18n="subtitle">Build and inspect schedules without sending expressions anywhere.</p>
+      </div>
+      <span class="dialect-badge" data-i18n="dialect">Unix 5-field</span>
+    </div>
+
+    <div class="control-bar" aria-label="Schedule controls" data-i18n-aria="scheduleControls">
+      <div class="mode-tabs" role="tablist" aria-label="Editor mode" data-i18n-aria="editorMode">
+        <button id="tab-visual" class="mode-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="visual-panel" tabindex="0" data-mode="visual" data-i18n="visualTab">Visual</button>
+        <button id="tab-expression" class="mode-tab" type="button" role="tab" aria-selected="false" aria-controls="expression-panel" tabindex="-1" data-mode="expression" data-i18n="expressionTab">Expression</button>
+      </div>
+
+      <label class="compact-control" for="time-zone">
+        <span data-i18n="timeZone">Time zone</span>
+        <input id="time-zone" type="text" list="time-zone-options" value="UTC" autocomplete="off" spellcheck="false">
+      </label>
+      <datalist id="time-zone-options"></datalist>
+
+      <label class="compact-control compact-control-count" for="occurrence-count">
+        <span data-i18n="occurrences">Occurrences</span>
+        <select id="occurrence-count">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="workspace-grid">
+      <section class="editor-column" aria-labelledby="editor-heading">
+        <div class="section-heading-row">
+          <h2 id="editor-heading" data-i18n="editorHeading">Schedule editor</h2>
+          <span class="privacy-label" data-i18n="localOnly">Browser-local</span>
+        </div>
+
+        <div id="visual-panel" role="tabpanel" aria-labelledby="tab-visual">
+          <div class="field-grid">
+            <label class="field-control" for="field-minute">
+              <span data-i18n="minute">Minute</span>
+              <select id="field-minute"></select>
+            </label>
+            <label class="field-control" for="field-hour">
+              <span data-i18n="hour">Hour</span>
+              <select id="field-hour"></select>
+            </label>
+            <label class="field-control" for="field-day-of-month">
+              <span data-i18n="dayOfMonth">Day of month</span>
+              <select id="field-day-of-month"></select>
+            </label>
+            <label class="field-control" for="field-month">
+              <span data-i18n="month">Month</span>
+              <select id="field-month"></select>
+            </label>
+            <label class="field-control" for="field-day-of-week">
+              <span data-i18n="dayOfWeek">Day of week</span>
+              <select id="field-day-of-week"></select>
+            </label>
+          </div>
+        </div>
+
+        <div id="expression-panel" role="tabpanel" aria-labelledby="tab-expression" hidden>
+          <label class="expression-control" for="expression-input">
+            <span data-i18n="cronExpression">Cron expression</span>
+            <input id="expression-input" type="text" value="* * * * *" autocomplete="off" spellcheck="false" inputmode="text" aria-describedby="expression-syntax expression-status">
+          </label>
+          <p id="expression-syntax" class="syntax-line"><code>minute hour day-of-month month day-of-week</code></p>
+        </div>
+
+        <div class="preset-section">
+          <h3 data-i18n="presets">Presets</h3>
+          <div id="preset-list" class="preset-list" aria-label="Schedule presets" data-i18n-aria="schedulePresets"></div>
+        </div>
+
+        <div class="expression-output">
+          <div class="expression-output-heading">
+            <span data-i18n="currentExpression">Current expression</span>
+            <button id="copy-button" class="copy-button" type="button" data-i18n="copy" disabled>Copy</button>
+          </div>
+          <code id="current-expression">* * * * *</code>
+        </div>
+
+        <p id="expression-status" class="status-message" role="status" aria-live="polite">Loading WebAssembly...</p>
+
+        <div class="description-list" aria-labelledby="description-heading">
+          <h3 id="description-heading" data-i18n="descriptionHeading">Description</h3>
+          <dl>
+            <div>
+              <dt>English</dt>
+              <dd id="description-en">...</dd>
+            </div>
+            <div>
+              <dt>简体中文</dt>
+              <dd id="description-zh">...</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="schedule-column" aria-labelledby="schedule-heading">
+        <div class="section-heading-row schedule-heading-row">
+          <div>
+            <h2 id="schedule-heading" data-i18n="scheduleHeading">Next occurrences</h2>
+            <p><span data-i18n="evaluatedIn">Evaluated in</span> <strong id="schedule-zone">UTC</strong></p>
+          </div>
+          <p id="schedule-status" class="schedule-status" role="status" aria-live="polite">Loading...</p>
+        </div>
+
+        <div class="table-scroll" tabindex="0" aria-label="Upcoming cron occurrences" data-i18n-aria="occurrenceTable">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" data-i18n="localTime">Local time</th>
+                <th scope="col">UTC</th>
+                <th scope="col" data-i18n="relative">Relative</th>
+              </tr>
+            </thead>
+            <tbody id="occurrence-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <span data-i18n="footer">No expressions or schedule data leave this page.</span>
+    <span class="footer-separator" aria-hidden="true">·</span>
+    <a href="https://github.com/Tinkora/cron_maker/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" data-i18n="security">Security</a>
+    <span class="footer-separator" aria-hidden="true">·</span>
+    <span id="time-zone-data">Time zone data: IANA ...</span>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

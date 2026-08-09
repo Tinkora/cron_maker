@@ -1,0 +1,12 @@
+/target/
+/dist/
+/release-source/
+/staging/
+/output/
+**/node_modules/
+**/pkg/
+**/test-results/
+**/playwright-report/
+**/blob-report/
+.playwright-cli/
+.DS_Store

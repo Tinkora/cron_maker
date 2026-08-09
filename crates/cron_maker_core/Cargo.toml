@@ -1,0 +1,18 @@
+[package]
+name = "cron_maker_core"
+version = "0.1.0"
+description = "Unix cron parsing, bilingual descriptions, and time-zone-aware scheduling"
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+serde.workspace = true
+thiserror.workspace = true
+chrono.workspace = true
+jiff.workspace = true
+jiff-tzdb.workspace = true
+croner.workspace = true

@@ -1,0 +1,77 @@
+name: Supply chain
+
+'on':
+  schedule:
+    - cron: '23 4 * * 1'
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supply-chain-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    permissions:
+      contents: read
+    uses: Tinkora/.github/.github/workflows/reusable-supply-chain.yml@ec412670eff1f85882d054253b09b9a78c8025f0 # Tinkora workflow bundle
+    with:
+      working-directory: .
+      toolchain: 1.88.0
+
+  tzdb-current:
+    name: IANA time-zone database currency
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install the project toolchain
+        shell: bash
+        run: rustup toolchain install 1.85.0 --profile minimal --no-self-update
+
+      - name: Compare bundled and current IANA releases
+        shell: bash
+        env:
+          IANA_TZDB_VERSION_URL: https://data.iana.org/time-zones/tzdb/version
+        run: |
+          set -euo pipefail
+          latest="$(curl --proto '=https' --tlsv1.2 --fail --show-error --silent \
+            --location --retry 3 "$IANA_TZDB_VERSION_URL")"
+          if [[ ! "$latest" =~ ^[0-9]{4}[a-z]$ ]]; then
+            echo "Unexpected IANA release value: $latest" >&2
+            exit 1
+          fi
+
+          cargo +1.85.0 fetch --locked
+          manifest="$(jq -r \
+            '[.packages[] | select(.name == "jiff-tzdb")][0].manifest_path // empty' \
+            < <(cargo +1.85.0 metadata --format-version 1 --locked))"
+          if [[ -z "$manifest" || ! -f "${manifest%/*}/tzname.rs" ]]; then
+            echo "Could not locate the locked jiff-tzdb source" >&2
+            exit 1
+          fi
+
+          bundled="$(sed -nE \
+            's/^pub\(super\) static VERSION: Option<&str> = Some\(r"([0-9]{4}[a-z])"\);$/\1/p' \
+            "${manifest%/*}/tzname.rs")"
+          if [[ ! "$bundled" =~ ^[0-9]{4}[a-z]$ ]]; then
+            echo "Could not read the bundled IANA release" >&2
+            exit 1
+          fi
+
+          echo "Bundled IANA release: $bundled"
+          echo "Current IANA release: $latest"
+          if [[ "$bundled" != "$latest" ]]; then
+            echo "Update jiff-tzdb and add IANA NEWS regression coverage before release" >&2
+            exit 1
+          fi

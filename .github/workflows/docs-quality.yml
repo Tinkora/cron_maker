@@ -1,0 +1,62 @@
+name: Documentation and workflow quality
+
+'on':
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  documentation:
+    name: Markdown and workflow contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@21c1be1b93ad9ed58fa840aacc3f279cde2a72ff # v24.2.0
+
+      - name: Install verified actionlint
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/actionlint.tar.gz"
+          curl --proto '=https' --tlsv1.2 --fail --silent --show-error --location \
+            --output "$archive" \
+            https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  $archive" | sha256sum --check
+          tar -xzf "$archive" -C "$RUNNER_TEMP" actionlint
+
+      - name: Parse workflow files
+        run: find .github/workflows -type f -name '*.yml' -exec "$RUNNER_TEMP/actionlint" {} +
+
+      - name: Enforce pinned action references
+        shell: bash
+        run: |
+          set -euo pipefail
+          ruby <<'RUBY'
+          errors = []
+          bundle = "ec412670eff1f85882d054253b09b9a78c8025f0"
+          Dir.glob(".github/workflows/*.{yml,yaml}").sort.each do |path|
+            File.readlines(path, encoding: "UTF-8", invalid: :replace, undef: :replace).each_with_index do |line, index|
+              match = line.match(/^\s*uses:\s*([^\s#]+)/)
+              next unless match
+
+              reference = match[1]
+              next if reference.start_with?("./")
+              unless reference.match?(/\A[^@\s]+@[0-9a-f]{40}\z/)
+                errors << "#{path}:#{index + 1}: action reference is not pinned to a full SHA"
+              end
+              if reference.start_with?("Tinkora/.github/") && !reference.end_with?("@#{bundle}")
+                errors << "#{path}:#{index + 1}: Tinkora workflow does not use the reviewed bundle"
+              end
+            end
+          end
+          abort(errors.join("\n")) unless errors.empty?
+          RUBY

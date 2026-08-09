@@ -1,0 +1,20 @@
+{
+  "name": "cron-maker-web-smoke",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build:wasm": "wasm-pack build --target web --out-dir static/pkg --out-name cron_maker_web . -- --locked",
+    "check:lockfile": "node scripts/check-lockfile-registry.mjs",
+    "serve": "http-server static -a 127.0.0.1 -p 4175 -c-1 --silent",
+    "test:browser": "playwright test",
+    "test:browser:local": "npm run build:wasm && npm run test:browser"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "http-server": "14.1.1"
+  }
+}

@@ -1,0 +1,5 @@
+* @Tinkora/maintainers
+
+/.github/workflows/ @Tinkora/maintainers @Tinkora/security
+/SECURITY.md @Tinkora/security
+/SECURITY.zh-CN.md @Tinkora/security

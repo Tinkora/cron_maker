@@ -1,0 +1,32 @@
+[package]
+name = "cron_maker_web"
+version = "0.1.0"
+description = "WebAssembly bindings and browser application for cron_maker"
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+publish = false
+exclude = [
+    "node_modules/**",
+    "pkg/**",
+    "playwright-report/**",
+    "static/pkg/**",
+    "test-results/**",
+]
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+cron_maker_core = { version = "0.1.0", path = "../cron_maker_core" }
+wasm-bindgen.workspace = true
+js-sys.workspace = true
+serde.workspace = true
+serde-wasm-bindgen.workspace = true
+serde_json.workspace = true
+console_error_panic_hook.workspace = true
