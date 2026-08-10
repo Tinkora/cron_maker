@@ -2,9 +2,13 @@
 
 All notable changes to cron_maker will be documented in this file. The project intends to follow [Semantic Versioning](https://semver.org/) when publishing releases.
 
-This file does not assert that a tag, package, deployment, or GitHub Release is currently available.
-
 ## [Unreleased]
+
+### Changed
+
+- Nothing yet.
+
+## [0.1.0] - 2026-08-11
 
 ### Added
 
@@ -34,3 +38,6 @@ This file does not assert that a tag, package, deployment, or GitHub Release is 
 - Only five-field Unix/Vixie cron is supported
 - Six- and seven-field expressions and `L`, `W`, `#`, `+`, and `?` are rejected
 - Quartz, AWS scheduling syntax, CLI, MCP integration, Agent Skill, hosted API, and published packages are not provided
+
+[Unreleased]: https://github.com/Tinkora/cron_maker/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Tinkora/cron_maker/releases/tag/v0.1.0
