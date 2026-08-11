@@ -65,7 +65,7 @@ Version 0.1 does not provide:
 - Natural-language-to-cron generation
 - Accounts, saved schedules, sync, collaboration, or history
 - A hosted API, server-side computation, CLI, MCP integration, or Agent Skill
-- An npm package, crates.io release, stable 1.0 API, or already-published Release
+- An npm package, crates.io release, or stable 1.0 API
 - Native mobile or desktop applications
 
 These exclusions keep the product contract aligned with behavior that is implemented and tested.

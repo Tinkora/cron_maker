@@ -6,17 +6,17 @@
 
 | Version or branch | Support status |
 | --- | --- |
-| Current pre-release codebase | Best-effort fixes |
-| Published releases | None are assumed available by this policy |
+| `main` | Best-effort fixes |
+| `v0.1.x` | Best-effort security fixes; no backport or response-time guarantee |
 | Older snapshots | Not supported unless explicitly named in a future advisory |
 
-cron_maker is maintained by a small team. Security fixes are prioritized, but there is no service-level response or backport guarantee. Update this table when the first release is actually published.
+cron_maker is maintained by a small team. Security fixes are prioritized, but there is no service-level response or backport guarantee.
 
 ## Report a Vulnerability Privately
 
 Do not open a public issue, discussion, or pull request for a suspected vulnerability.
 
-The intended private channel is the target repository's [private vulnerability report form](https://github.com/Tinkora/cron_maker/security/advisories/new). Verify that the link opens a private advisory form before submitting details. Its inclusion here does not assert that the target repository or feature is currently available.
+The intended private channel is the target repository's [private vulnerability report form](https://github.com/Tinkora/cron_maker/security/advisories/new). The form is enabled for this public repository; if it becomes unavailable, do not publish the report.
 
 If the private form is unavailable, do not publish the report. Contact a Tinkora organization owner through an existing trusted private channel and ask for a confidential reporting path.
 

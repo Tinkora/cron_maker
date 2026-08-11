@@ -94,7 +94,12 @@ The application does not intentionally transmit expressions or schedule results.
 
 ## Release Status
 
-The public repository contains a pre-1.0 implementation. This documentation does not assert that a hosted deployment, tag, package, or GitHub Release is currently available. See [Maturity and Compatibility](./docs/MATURITY.md).
+The public repository contains a pre-1.0 implementation. `v0.1.0` is the first
+public release and the browser demo is deployed on [GitHub Pages](https://tinkora.github.io/cron_maker/).
+Release assets and their verification records are available from the
+[GitHub Releases page](https://github.com/Tinkora/cron_maker/releases). See
+[Maturity and Compatibility](./docs/MATURITY.md) for supported behavior and
+limitations.
 
 ## License
 

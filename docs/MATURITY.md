@@ -4,7 +4,9 @@
 
 ## Current Status
 
-cron_maker is a pre-1.0 codebase. Its core five-field path is implemented and covered by Rust and browser tests, but this status does not assert that a remote repository, hosted deployment, tag, package, or GitHub Release is currently available.
+cron_maker is a pre-1.0 codebase. Its core five-field path is implemented and
+covered by Rust and browser tests. `v0.1.0` is the first public release, with a
+GitHub Pages demo and reproducible release assets; it is not a stable 1.0 API.
 
 | Area | Status | Evidence and limits |
 | --- | --- | --- |
@@ -65,7 +67,7 @@ The repository must continue to compile with Rust 1.85. CI on a newer stable com
 - The application has no accounts, saved schedules, synchronization, history, or collaboration.
 - There is no CLI, MCP integration, Agent Skill, hosted API, npm release, crates.io release, or stable 1.0 API.
 - Chromium automation at four widths is not a multi-browser compatibility guarantee.
-- No public release availability is assumed by this document.
+- The first release does not imply a support SLA, multi-browser certification, or long-term API stability.
 
 ## Versioning Policy
 

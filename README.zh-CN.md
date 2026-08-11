@@ -94,7 +94,9 @@ Playwright suite 会在 375、768、1024 和 1440 像素宽度下测试 Chromium
 
 ## 发布状态
 
-公开仓库中包含 1.0 之前的实现。本文档不声称托管部署、tag、package 或 GitHub Release 当前已经可用。详情见[成熟度与兼容性](./docs/MATURITY.zh-CN.md)。
+公开仓库中包含 1.0 之前的实现。`v0.1.0` 是首个公开 Release，浏览器 Demo 已部署到
+[GitHub Pages](https://tinkora.github.io/cron_maker/)。Release 资产及其验证记录可从
+[GitHub Releases 页面](https://github.com/Tinkora/cron_maker/releases)获取。支持行为与限制见[成熟度与兼容性](./docs/MATURITY.zh-CN.md)。
 
 ## 许可证
 
