@@ -65,7 +65,7 @@ cron_maker 是一个专注的浏览器工具，用于创建、检查、解释和
 - 从自然语言生成 cron 表达式
 - 账号、已保存调度、同步、协作或历史记录
 - 托管 API、服务器端计算、CLI、MCP 集成或 Agent Skill
-- npm package、crates.io release、稳定 1.0 API 或已经发布的 Release
+- npm package、crates.io release 或稳定 1.0 API
 - 原生移动或桌面应用
 
 这些排除项使产品契约与已经实现并测试的行为保持一致。

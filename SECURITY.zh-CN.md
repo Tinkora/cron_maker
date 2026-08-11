@@ -6,17 +6,17 @@
 
 | 版本或 branch | 支持状态 |
 | --- | --- |
-| 当前预发布代码库 | 尽力修复 |
-| 已发布版本 | 本策略不假设任何版本当前已经发布 |
+| `main` | 尽力修复 |
+| `v0.1.x` | 尽力提供安全修复；不承诺 backport 或响应时间 |
 | 更早 snapshot | 除非未来 advisory 明确列出，否则不支持 |
 
-cron_maker 由小型团队维护。安全修复具有高优先级，但不提供服务级响应或 backport 保证。首个 Release 实际发布后必须更新此表。
+cron_maker 由小型团队维护。安全修复具有高优先级，但不提供服务级响应或 backport 保证。
 
 ## 私密报告漏洞
 
 不要为疑似漏洞创建公开 issue、discussion 或 pull request。
 
-预期的私密渠道是目标仓库的[私密漏洞报告表单](https://github.com/Tinkora/cron_maker/security/advisories/new)。提交详情前必须确认该链接会打开 private advisory form。本文包含此链接并不表示目标仓库或该功能当前已经可用。
+预期的私密渠道是目标仓库的[私密漏洞报告表单](https://github.com/Tinkora/cron_maker/security/advisories/new)。该公开仓库已经启用此表单；如果表单不可用，不要公开报告。
 
 如果私密表单不可用，不要公开报告。通过已经建立的可信私密渠道联系 Tinkora organization owner，并请求机密报告方式。
 

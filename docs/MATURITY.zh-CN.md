@@ -4,7 +4,8 @@
 
 ## 当前状态
 
-cron_maker 是 1.0 之前的代码库。核心五字段路径已经实现，并有 Rust 和浏览器测试覆盖，但此状态不表示远端仓库、托管部署、tag、package 或 GitHub Release 当前已经可用。
+cron_maker 是 1.0 之前的代码库。核心五字段路径已经实现，并有 Rust 和浏览器测试覆盖。
+`v0.1.0` 是首个公开 Release，提供 GitHub Pages Demo 和可复现发布资产；这不代表已经拥有稳定的 1.0 API。
 
 | 范围 | 状态 | 证据与限制 |
 | --- | --- | --- |
@@ -65,7 +66,7 @@ cron_maker 是 1.0 之前的代码库。核心五字段路径已经实现，并�
 - 应用没有账号、已保存调度、同步、历史记录或协作。
 - 没有 CLI、MCP 集成、Agent Skill、托管 API、npm release、crates.io release 或稳定 1.0 API。
 - Chromium 在四种宽度下的自动化不等同于多浏览器兼容保证。
-- 本文档不假设任何公开 Release 当前可用。
+- 首个 Release 不代表支持 SLA、多浏览器认证或长期 API 稳定性。
 
 ## 版本策略
 
