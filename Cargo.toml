@@ -18,7 +18,7 @@ wasm-bindgen = "0.2"
 js-sys = "0.3"
 serde-wasm-bindgen = "0.6"
 chrono = "0.4"
-jiff = { version = "=0.2.35", default-features = false, features = ["std", "tzdb-bundle-always"] }
+jiff = { version = "=0.2.37", default-features = false, features = ["std", "tzdb-bundle-always"] }
 jiff-tzdb = "=0.1.8"
 croner = "3.0.1"
 console_error_panic_hook = "0.1"
